@@ -1,0 +1,11 @@
+{
+  "name": "gameorgame",
+  "version": "1.0.0",
+  "description": "This is a prototype of a game ranking system. I'll have it be open source until I decide to try to make it a thing.",
+  "main": "app/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "WIlliam Wood",
+  "license": "ISC"
+}
