@@ -1,0 +1,27 @@
+{
+  "name": "gameorgame",
+  "description": "This is a prototype of a game ranking system. I'll have it be open source until I decide to try to make it a thing.",
+  "main": "app/index.html",
+  "authors": [
+    "WIlliam Wood"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/woodw/gameorgame",
+  "private": true,
+  "ignore": [    
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-mocks": "^1.5.8",
+    "angular-resource": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.1.0"
+  }
+}

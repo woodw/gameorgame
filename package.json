@@ -2,34 +2,29 @@
   "name": "gameorgame",
   "version": "1.0.0",
   "description": "This is a prototype of a game ranking system. I'll have it be open source until I decide to try to make it a thing.",
-  "main": "app/index.html",
+  "main": "gameongame.js",
   "scripts": {
     "preinstall": "ls -ao",
-    "start": "node enscribed-patient.js",
-    "test": "gulp test"
+    "start": "node gameongame.js",
+    "pretest": "npm install",
+    "test": "karma start karma.conf.js",
+    "test-single-run": "karma start karma.conf.js --single-run"
   },
   "author": "WIlliam Wood",
   "license": "ISC",
   "dependencies": {
     "bower": "^1.7.9",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "ejs": "^2.4.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "sinon": "^1.17.5",
-    "gulp": "^3.9.0",
-    "gulp-bower": "0.0.11",
-    "gulp-clean": "^0.3.2",
-    "gulp-debug": "^2.1.2",
-    "gulp-environments": "^0.1.1",
-    "gulp-inject": "^3.0.0",
-    "gulp-load-plugins": "^1.1.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-vulcanize": "^6.1.0",
-    "gulp-watch": "^4.3.5",
-    "jshint": "^2.9.2",
+    "gulp": "^3.9.1",
+    "jasmine-core": "^2.4.1",
     "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
     "mocha": "^3.0.2",
-    "vulcanize": "1.14.8"
+    "sinon": "^1.17.5"
   }
 }
