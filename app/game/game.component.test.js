@@ -2,43 +2,22 @@ describe('game', function(){
     beforeEach(module('game'));
 
     describe('GameController', function(){
-        it('Should have a id object', inject(function($componentController){
-            var ctrl = $componentController('game');
-
-            expect(ctrl.gameid).not.toBeNull();
-        }));
-        
-        it('Should have a title object', inject(function($componentController){
-            var ctrl = $componentController('game');
-
-            expect(ctrl.title).toBeDefined();
+        var $httpBackend, ctrl;
+        beforeEach(inject(function($componentController, _$httpBackend_) {
+            $httpBackend = _$httpBackend_;
+            $httpBackend.expectGET('api/games/game.json')
+                .respond({title:'Doom',review:'This is a review of Doom. It is awesome and I love it'});
+            
+            ctrl = $componentController('game');
         }));
 
-        it('Should have a review object', inject(function($componentController){
-            var ctrl = $componentController('game');
+        it('Should grab two properties for the game: title and review', function(){
+            expect(ctrl.title).toBeUndefined();
+            expect(ctrl.review).toBeUndefined();
 
-            expect(ctrl.review).toBeDefined();    
-        }));
-
-        it('Should have a rank_pool object', inject(function($componentController){
-            var ctrl = $componentController('game');
-
-            expect(ctrl.rankPool).toBeDefined();    
-        }));
-
-        it('Should have a rank object with 6 rank categories', inject(function($componentController){
-            var ctrl = $componentController('game');
-
-            expect(ctrl.ranks.length).toBe(6);    
-        }));
-
-        it('Should have rank total to equal 10', inject(function($componentController){
-            var ctrl = $componentController('game');
-            var sumCallback = ( pre, cur ) =>  pre + cur.points;
-
-            var sum = ctrl.ranks.reduce(sumCallback,0) + ctrl.rankPool;
-
-            expect(sum).toBe(10);    
-        }));
+            $httpBackend.flush();
+            expect(ctrl.title).toEqual('Doom');
+            expect(ctrl.review).toEqual('This is a review of Doom. It is awesome and I love it');
+        });
     });
 });
