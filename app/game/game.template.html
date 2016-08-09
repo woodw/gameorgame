@@ -1,0 +1,17 @@
+<div class="game">
+    <img class="game-icon" src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
+    <div class="game-details">
+        <h3>{{$ctrl.title}}</h3>
+        <div class="game-rank">
+            <ul>
+                <li ng-repeat="rank in $ctrl.ranks">
+                    <div>{{rank.category}}</div>
+                    <div>{{rank.points}}</div>
+                </li>   
+            </ul>
+        </div>
+        <div class="game-review">
+            <p>{{$ctrl.review}}</p>
+        </div>
+    </div>
+</div>
