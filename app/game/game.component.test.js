@@ -5,8 +5,8 @@ describe('game', function(){
         var $httpBackend, ctrl;
         beforeEach(inject(function($componentController, _$httpBackend_) {
             $httpBackend = _$httpBackend_;
-            $httpBackend.expectGET('api/games/game.json')
-                .respond({title:'Doom',review:'This is a review of Doom. It is awesome and I love it'});
+            $httpBackend.expectGET('api/games/*')
+                .respond({title:'Generic Game',review:'Beep boop beep I am a robit.'});
             
             ctrl = $componentController('game');
         }));
@@ -16,8 +16,8 @@ describe('game', function(){
             expect(ctrl.review).toBeUndefined();
 
             $httpBackend.flush();
-            expect(ctrl.title).toEqual('Doom');
-            expect(ctrl.review).toEqual('This is a review of Doom. It is awesome and I love it');
+            expect(ctrl.title).toEqual('Generic Game');
+            expect(ctrl.review).toEqual('Beep boop beep I am a robit.');
         });
     });
 });
