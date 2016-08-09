@@ -1,4 +1,5 @@
 angular
     .module('gameongameApp', [
-        'gameFaceOff'
+        'gameFaceOff',
+        'game'
     ]);

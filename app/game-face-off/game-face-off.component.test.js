@@ -2,10 +2,10 @@ describe('gameFaceOff', function(){
     beforeEach(module('gameFaceOff'));
 
     describe('GameFaceOffController', function(){
-        it('Should Display Doom', inject(function($componentController){
+        it('Should contain two games', inject(function($componentController){
             var ctrl = $componentController('gameFaceOff');
 
-            expect(ctrl.game).toBe('Doom');
+            expect(ctrl.games.length).toBe(2);
         }));
     });
 });

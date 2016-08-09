@@ -1,1 +1,4 @@
-angular.module('gameFaceOff', []);
+angular
+    .module('gameFaceOff', [
+        'game'
+    ]);
