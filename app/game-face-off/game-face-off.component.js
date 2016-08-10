@@ -1,7 +1,9 @@
 //Object
 function GameFaceOffController(){
     this.ctrl = this;
-    this.games = ['379720','377160'];
+    
+    this.gone = '379720';
+    this.gtwo = '234140';
 }
 
 //Angular Blurb
