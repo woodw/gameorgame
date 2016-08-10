@@ -5,8 +5,9 @@
   "main": "gameongame.js",
   "scripts": {
     "preinstall": "ls -ao",
+    "prestart":"gulp build",
     "start": "node gameongame.js",
-    "pretest": "npm install",
+    "pretest": "npm install && gulp",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run"
   },
@@ -20,6 +21,11 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-connect": "^5.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^2.0.0",
     "jasmine-core": "^2.4.1",
     "karma": "^1.1.2",
     "karma-chrome-launcher": "^1.0.1",

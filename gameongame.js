@@ -21,6 +21,9 @@ app.get('/api/games/:gameId', function(request, response){
         case '377160':
         response.json({title:'Fallout 4',review:'Why does this not work. I mean... why is this game so good'});
             break;
+        case '234140':
+            response.json({title:'Mad Max',review:'Mad Max was a great game with plenty to do. In true Avalanche fashion there was more side missions between each story mission than neccessary.'});
+            break;
     }
     
 });
