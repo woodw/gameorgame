@@ -1,23 +1,42 @@
-describe('game', function(){
+describe('game', function (){
     beforeEach(module('game'));
 
-    describe('GameController', function(){
-        var $httpBackend, ctrl;
-        beforeEach(inject(function($componentController, _$httpBackend_) {
-            $httpBackend = _$httpBackend_;
-            $httpBackend.expectGET('api/games/*')
-                .respond({title:'Generic Game',review:'Beep boop beep I am a robit.'});
-            
-            ctrl = $componentController('game');
-        }));
+    const _gameid = '8675309';
+    const _title = 'Generic Game';
+    const _review = 'Beep boop beep I am a robit.';
 
-        it('Should grab two properties for the game: title and review', function(){
-            expect(ctrl.title).toBeUndefined();
-            expect(ctrl.review).toBeUndefined();
+    describe('GameController', function (){
+        
+        describe('game init',function (){
+            var $httpBackend, underTest;
+            beforeEach(inject(function($componentController, _$httpBackend_) {
+                underTest = $componentController('game');
+                underTest.gameid = _gameid;
+                
+                $httpBackend = _$httpBackend_;
+                $httpBackend.expectGET('api/games/'+underTest.gameid)
+                    .respond({title:_title,review:_review});
+            }));
 
-            $httpBackend.flush();
-            expect(ctrl.title).toEqual('Generic Game');
-            expect(ctrl.review).toEqual('Beep boop beep I am a robit.');
+            it('Should call getGameObject on init', function(){
+                spyOn(underTest, 'getGameObject');
+
+                underTest.$onInit();
+
+                expect(underTest.getGameObject).toHaveBeenCalled();
+            });
+
+            it('Should call getGameObject for two properties', function(){
+                expect(underTest.title).toBeUndefined();
+                expect(underTest.review).toBeUndefined();
+
+                underTest.getGameObject();
+
+                $httpBackend.flush();
+                expect(underTest.title).toEqual(_title);
+                expect(underTest.review).toEqual(_review);
+            });
         });
+    
     });
 });

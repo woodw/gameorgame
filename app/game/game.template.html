@@ -3,12 +3,7 @@
     <h3>{{$ctrl.title}}</h3>
     <div class="game-rank">
         <ul>
-            <li>Immersion</li>
-            <li>Gamplay</li>
-            <li>Performance</li>
-            <li>Sound</li>
-            <li>Story</li>
-            <li>Visuals</li>
+            <li ng-repeat="category in $ctrl.categories" ng-click="$ctrl.select(category)" class="{{category}}">{{category}}</li>
         </ul>
     </div>
     <div class="game-review">
