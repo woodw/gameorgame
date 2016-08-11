@@ -5,11 +5,10 @@
   "main": "gameongame.js",
   "scripts": {
     "preinstall": "ls -ao",
-    "prestart":"gulp build",
+    "prestart": "gulp build",
     "start": "node gameongame.js",
-    "pretest": "npm install && gulp",
-    "test": "karma start karma.conf.js",
-    "test-single-run": "karma start karma.conf.js --single-run"
+    "pretest": "npm install",
+    "test": "gulp"
   },
   "author": "WIlliam Wood",
   "license": "ISC",
@@ -27,6 +26,7 @@
     "gulp-minify-css": "^1.2.4",
     "gulp-uglify": "^2.0.0",
     "jasmine-core": "^2.4.1",
+    "jshint": "^2.9.2",
     "karma": "^1.1.2",
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",

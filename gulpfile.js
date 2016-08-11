@@ -6,12 +6,20 @@ var connect = require('gulp-connect');
 var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-clean');
+var Server = require('karma').Server;
 
 gulp.task('lint', function (){
     gulp.src(['./app/**/*.js','!./app/bower_components/**'])
         .pipe(jshint({esversion:6}))
         .pipe(jshint.reporter('default'))
         .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('tdd', ['lint'], function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('clean', function (){
@@ -45,6 +53,6 @@ gulp.task('copy-html-files', function (){
         .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('default', ['lint']);
+gulp.task('default', ['tdd']);
 
-gulp.task('build', ['lint', 'clean', 'minify-css', 'minify-js', 'copy-bower-components', 'copy-html-files']);
+gulp.task('build', ['default', 'clean', 'minify-css', 'minify-js', 'copy-bower-components', 'copy-html-files']);

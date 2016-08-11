@@ -13,7 +13,7 @@ module.exports = function(config) {
       '**/*.module.js',
       '*!(.module|.test).js',
       '!(bower_components)/**/*!(.module|.test).js',
-      '**/*-test.js'
+      '**/*.test.js'
     ],
 
     autoWatch: true,
