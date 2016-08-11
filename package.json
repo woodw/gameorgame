@@ -7,7 +7,7 @@
     "preinstall": "ls -ao",
     "prestart": "gulp build",
     "start": "node gameongame.js",
-    "pretest": "npm install",
+    "pretest": "npm install && bower install",
     "test": "gulp"
   },
   "author": "WIlliam Wood",
