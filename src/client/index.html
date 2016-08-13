@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8" />
+        <title>Game Or Game</title>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="/app/app.css" />
+
+        <script src="bower_components/angular/angular.js"></script>        
+        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+
+        <script src="app/app.module.js"></script>
+        <script src="app/app.config.js"></script>
+
+        <!-- Services -->
+        <script src="app/core/core.module.js"></script>
+        <script src="app/core/game/game.module.js"></script>
+        <script src="app/core/game/game.service.js"></script>
+
+        <!-- Components -->
+        <script src="app/game-compare/game-compare.module.js"></script>
+        <script src="app/game-compare/game-compare.component.js"></script>
+
+        <script src="app/game/game.module.js"></script>
+        <script src="app/game/game.component.js"></script>
+    </head>
+    <body>
+        <div ng-view class="view-frame"></div>
+    </body>
+</html>
