@@ -3,9 +3,9 @@
 describe('Game', function (){
     var $httpBackend;
     var Game;
-    var gamesData = [{"level":3,"id":"379720","title":"Doom","review":"Doom review"},
-                    {"level":3,"id":"379720","title":"Doom","review":"Doom review"},
-                    {"level":3,"id":"379720","title":"Doom","review":"Doom review"}];
+    var gamesData = [{'level':3,'id':'379720','title':'Doom','review':'Doom review'},
+                    {'level':3,'id':'379720','title':'Doom','review':'Doom review'},
+                    {'level':3,'id':'379720','title':'Doom','review':'Doom review'}];
 
     beforeEach(function (){
         jasmine.addCustomEqualityTester(angular.equals);

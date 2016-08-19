@@ -1,11 +1,9 @@
 {
-
-angular
-    .module('app', [
-        'ngRoute',
-        'core',
-        'gameCompare',
-        'game'
-    ]);
-
+    angular
+        .module('app', [
+            'ngRoute',
+            'core',
+            'gameCompare',
+            'game'
+        ]);
 }

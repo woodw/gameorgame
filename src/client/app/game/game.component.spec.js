@@ -6,24 +6,23 @@ describe('game', function (){
     describe('GameController', function (){
 
         var _gameid = '8675309';
-        var _title = 'Generic Game';
-        var _review = 'Beep boop beep I am a robit.';
         var gameData = {
-                level:3,
-                id:"379720",
-                title:'Doom',
-                review:'This game is the best!',
-                categories:[
-                    {title:'gameplay',level:2},
-                    {title:'immersion',level:3},
-                    {title:'performance',level:1},
-                    {title:'sound',level:3},
-                    {title:'story',level:3},
-                    {title:'visuals',level:1}
-                ]
-            };
+            level:3,
+            id:'379720',
+            title:'Doom',
+            review:'This game is the best!',
+            categories:[
+                {title:'gameplay',level:2},
+                {title:'immersion',level:3},
+                {title:'performance',level:1},
+                {title:'sound',level:3},
+                {title:'story',level:3},
+                {title:'visuals',level:1}
+            ]
+        };
 
-        var mockUtilSvc, underTest, $httpBackend;
+        //var mockUtilSvc; 
+        var underTest, $httpBackend;
 
         //model creation to make a new factory in lower scope to override Angular factory. Mocking
         //angular.model(function($provide){
@@ -34,13 +33,14 @@ describe('game', function (){
         //    });
         //});
 
-        beforeEach(inject(function ($componentController, _$httpBackend_, Game){
+        //beforeEach(inject(function ($componentController, _$httpBackend_, Game){
+        beforeEach(inject(function ($componentController, _$httpBackend_){
             $httpBackend = _$httpBackend_;
             underTest = $componentController('game');
             underTest.gameid = _gameid;
             //mockUtilSvc = Game;
 
-            $httpBackend.expectGET('api/games/'+_gameid).respond(gameData)
+            $httpBackend.expectGET('api/games/'+_gameid).respond(gameData);
             
         }));
 

@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jasmine": true
+    },
+    "globals": {
+        "angular": 1,
+        "inject": 1
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": [
+            "warn",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
