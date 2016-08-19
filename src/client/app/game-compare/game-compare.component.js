@@ -2,7 +2,7 @@
 
     //Object
     function GameCompareController(Game){
-        this.ctrl = this;
+        var ctrl = this;
         ctrl.games = Game.query();
     }
 
