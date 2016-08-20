@@ -1,6 +1,6 @@
 {
 
-    //Object
+    /* @ngInject */
     function GameCompareController(Game){
         var ctrl = this;
         ctrl.games = Game.query();

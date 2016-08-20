@@ -1,5 +1,5 @@
 {
-
+    /* @ngInject */
     function GameService($resource){
         return $resource('api/games/:gameId', {}, {
             query: {
@@ -12,6 +12,6 @@
 
     angular
         .module('core.game')
-        .factory('Game', ['$resource', GameService]);
+        .factory('Game', GameService);
 
 }

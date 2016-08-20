@@ -1,5 +1,5 @@
 {
-    //Controller
+    /* @ngInject */
     function GameController($http, Game){
         var ctrl = this;   
         
