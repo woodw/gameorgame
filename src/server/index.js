@@ -4,9 +4,9 @@ var app = express();
 //var router = express.Router();
 
 app.set('port', (process.env.PORT || 3000));
-app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, '../../dist')));
 app.engine('html', require('ejs').renderFile);
-app.set('views', path.join(__dirname, '../client'));
+app.set('views', path.join(__dirname, '../../dist'));
 app.set('view engine', 'html');
 
 app.get('/', function(request, response) {
