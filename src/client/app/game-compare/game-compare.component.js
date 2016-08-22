@@ -3,7 +3,9 @@
     /* @ngInject */
     function GameCompareController(Game){
         var ctrl = this;
-        ctrl.games = Game.query();
+        this.games = Game.query();
+        this.test = 'what';
+        this.orderProp = 'age';
     }
 
     //Angular Blurb
