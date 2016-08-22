@@ -1,6 +1,6 @@
 {
     /* @ngInject */
-    function GameController($http, Game){
+    function GameController($templateCache, $http, Game){
         var ctrl = this;   
         
         ctrl.game = {};
