@@ -7,6 +7,6 @@ angular
 
         $routeProvider
             .when('/', {
-                template: '<game-compare></game-compare><p>hi there</p>'
+                template: '<game-compare></game-compare>'
             });
     }]);
