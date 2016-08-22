@@ -1,9 +1,9 @@
 {
     angular
-        .module('app', [
+        .module('towerOfGamesApp', [
             'ngRoute',
             'core',
+            'game',
             'gameCompare',
-            'game'
         ]);
 }
