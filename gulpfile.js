@@ -39,21 +39,23 @@ var pkg = {
         bower_script_dest: 'dist/client/bower_components',
         client_template_src: 'src/client/index.html',
         client_style_dest: 'style.min.css',
-        client_script_dest: [
-            'templates.min.js', 
-            'app.min.js'
+        client_script_dest: [ 
+            'app.min.js',
+            'templates.min.js'
         ],
         angular_script_src: [
-            'src/client/app/*.module.js',
-            'src/client/app/*.config.js',
-            'src/client/app/core/*.module.js',
-            'src/client/app/core/**/*.module.js',
-            'src/client/app/core/**/*.service.js',
-            'src/client/app/**/*.module.js',
-            'src/client/app/**/*.component.js'
+            'src/client/app/core/game/game.module.js',
+            'src/client/app/core/game/game.service.js',
+            'src/client/app/core/core.module.js',
+            'src/client/app/game/game.module.js',
+            'src/client/app/game/game.component.js',
+            'src/client/app/game-compare/game-compare.module.js',
+            'src/client/app/game-compare/game-compare.component.js',
+            'src/client/app/app.module.js',
+            'src/client/app/app.config.js'
         ],
         angular_script_dest: 'app.min.js',
-        angular_template_src: 'src/client/app/**/*.template.html',
+        angular_template_src: 'src/client/**/*.template.html',
         angular_template_dest: 'templates.min.js'
     }
 }
@@ -88,8 +90,9 @@ gulp.task('clean', function (){
 gulp.task('cache-templates', ['clean'], function () {
     return gulp.src(pkg.paths.angular_template_src)
         .pipe(templates(pkg.paths.angular_template_dest, {
-            standalone: true,
+            standalone: false,
             transformUrl: function (url){
+                gutil.log(url);
                 return url;
             }
         }))
