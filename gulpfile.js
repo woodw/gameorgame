@@ -16,8 +16,9 @@ var htmlreplace = require('gulp-html-replace');
 
 //store HTML templates within Angular templateCache
 var templates = require('gulp-angular-templatecache');
-//might remove this
-var minifyHTML = require('gulp-minify-html');
+
+//minify css
+var cleancss = require('gulp-clean-css');
 
 //Bundle angular app code into one production file.
 var sourcemaps = require('gulp-sourcemaps');
@@ -38,7 +39,8 @@ var pkg = {
         bower_script_src: 'src/client/bower_components/**',
         bower_script_dest: 'dist/client/bower_components',
         client_template_src: 'src/client/index.html',
-        client_style_dest: 'style.min.css',
+        client_style_src: 'src/client/app/app.css',
+        client_style_dest: 'app.css',
         client_script_dest: [ 
             'app.min.js',
             'templates.min.js'
@@ -99,6 +101,12 @@ gulp.task('cache-templates', ['clean'], function () {
         .pipe(gulp.dest(pkg.paths.client_dist));
 });
 
+gulp.task('minify-css', ['clean'], function() {
+  return gulp.src('src/client/app/*.css')
+    .pipe(cleancss({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist/client'));
+});
+
 //Application JS files, 
 gulp.task('minify-js', ['clean'], function () {
     return gulp.src(pkg.paths.angular_script_src)
@@ -135,4 +143,4 @@ gulp.task('copy-index', ['clean'], function (){
 
 gulp.task('test', ['tdd']);
 
-gulp.task('build', ['copy-bower-components', 'cache-templates', 'minify-js', 'copy-index']);
+gulp.task('build', ['copy-bower-components', 'cache-templates', 'minify-js', 'minify-css', 'copy-index']);
