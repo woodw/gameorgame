@@ -5,11 +5,10 @@
   "main": "src/server/development.js",
   "scripts": {
     "preinstall": "ls -ao",
-    "postinstall": "bower install",
-    "prestart": "gulp test && gulp build",
-    "start": "node src/server/production.js",
-    "pretest": "gulp test",
-    "test": "node src/server/development.js"
+    "prestart": "npm test",
+    "start": "node src/server/development.js",
+    "pretest": "npm install && bower install",
+    "test": "gulp test"
   },
   "author": "WIlliam Wood",
   "license": "ISC",
