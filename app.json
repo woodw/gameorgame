@@ -1,0 +1,16 @@
+{
+  "name": "gameorgame",
+  "description": "This is a configuration file to review from heroku",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
