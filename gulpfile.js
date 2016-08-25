@@ -1,58 +1,146 @@
 'use strict';
 
+//Gulp task runner
 var gulp = require('gulp');
 
-var connect = require('gulp-connect');
-var jshint = require('gulp-jshint');
-var uglify = require('gulp-uglify');
-var minifycss = require('gulp-clean');
+//Gulp assistants
+var gutil = require('gulp-util');
+var clean = require('gulp-clean');
+
+//Test and verifying javascript w/ unit tests
+var eslint = require('gulp-eslint');
 var Server = require('karma').Server;
 
+//replace blocks of development sources with production mini files
+var htmlreplace = require('gulp-html-replace');
+
+//store HTML templates within Angular templateCache
+var templates = require('gulp-angular-templatecache');
+
+//minify css
+var cleancss = require('gulp-clean-css');
+
+//Bundle angular app code into one production file.
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+var ngAnnotate = require('gulp-ng-annotate');
+var bytediff = require('gulp-bytediff');
+var babel = require('gulp-babel');
+
+//directory sources
+var pkg = {
+    paths: {
+        karma_cfg: __dirname + '/karma.conf.js',
+        client_src: 'src/client/',
+        client_dist: 'dist/client/',
+        server_script_src: 'src/server/index.js',
+        karma_script_src: 'src/client/app/**/*.spec.js',
+        bower_script_src: 'src/client/bower_components/**',
+        bower_script_dest: 'dist/client/bower_components',
+        client_template_src: 'src/client/index.html',
+        client_style_src: 'src/client/app/app.css',
+        client_style_dest: 'app.css',
+        client_script_dest: [ 
+            'app.min.js',
+            'templates.min.js'
+        ],
+        angular_script_src: [
+            'src/client/app/core/game/game.module.js',
+            'src/client/app/core/game/game.service.js',
+            'src/client/app/core/core.module.js',
+            'src/client/app/game/game.module.js',
+            'src/client/app/game/game.component.js',
+            'src/client/app/game-compare/game-compare.module.js',
+            'src/client/app/game-compare/game-compare.component.js',
+            'src/client/app/app.module.js',
+            'src/client/app/app.config.js'
+        ],
+        angular_script_dest: 'app.min.js',
+        angular_template_src: 'src/client/**/*.template.html',
+        angular_template_dest: 'templates.min.js'
+    }
+}
+
+//Check to make sure coding is up to standards
 gulp.task('lint', function (){
-    gulp.src(['./app/**/*.js','!./app/bower_components/**'])
-        .pipe(jshint({esversion:6}))
-        .pipe(jshint.reporter('default'))
-        .pipe(jshint.reporter('fail'));
+    return gulp.src([].concat(
+            pkg.paths.angular_script_src,
+            pkg.paths.karma_script_src,
+            pkg.paths.server_script_src
+        ))
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failOnError());
 });
 
+//Angular UNIT Test
 gulp.task('tdd', ['lint'], function (done) {
-  new Server({
-    configFile: __dirname + '/karma.conf.js',
+  return new Server({
+    configFile: pkg.paths.karma_cfg,
     singleRun: true
   }, done).start();
 });
 
+//Clean the dist folder before build
 gulp.task('clean', function (){
-    gulp.src('./dist/*')
-        .pipe(clean({force:true}));
+    return gulp.src(pkg.paths.client_dist)
+        .pipe(clean({force:true,read: false}));
 });
 
-gulp.task('minify-css', function (){
-    var opts = {comments:true, spare:true};
-    gulp.src(['./app/**/*.css','!./app/bower_components/**'])
-        .pipe(minifycss(opts))
-        .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('minify-js', function (){
-    gulp.src(['./app/**/*.js','!./app/bower_components/**'])
-        .pipe(uglify({
-            // inSourceMap:
-            // outSourceMap: "app.js/map"
+//Convert Anuglar html templates to cache
+gulp.task('cache-templates', ['clean'], function () {
+    return gulp.src(pkg.paths.angular_template_src)
+        .pipe(templates(pkg.paths.angular_template_dest, {
+            standalone: false,
+            transformUrl: function (url){
+                gutil.log(url);
+                return url;
+            }
         }))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest(pkg.paths.client_dist));
 });
 
-gulp.task('copy-bower-components', function (){
-    gulp.src('./app/bower_components/**')
-        .pipe(gulp.dest('dist/bower_components'));
+gulp.task('minify-css', ['clean'], function() {
+  return gulp.src('src/client/app/*.css')
+    .pipe(cleancss({compatibility: 'ie8'}))
+    .pipe(gulp.dest('dist/client'));
 });
 
-gulp.task('copy-html-files', function (){
-    gulp.src('./app/**/*.html')
-        .pipe(gulp.dest('dist/'));
+//Application JS files, 
+gulp.task('minify-js', ['clean'], function () {
+    return gulp.src(pkg.paths.angular_script_src)
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(concat(pkg.paths.angular_script_dest, {newLine: ';'}))
+        .pipe(ngAnnotate({
+            add: true
+        }))
+        .pipe(bytediff.start())
+        .pipe(uglify({mangle: true}))
+        .pipe(bytediff.stop())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest(pkg.paths.client_dist));
 });
 
-gulp.task('default', ['tdd']);
+//move the bower files to dist
+gulp.task('copy-bower-components', ['clean'], function (){
+    return gulp.src(pkg.paths.bower_script_src)
+        .pipe(gulp.dest(pkg.paths.bower_script_dest));
+});
 
-gulp.task('build', ['default', 'clean', 'minify-css', 'minify-js', 'copy-bower-components', 'copy-html-files']);
+//move the index to dist and point to minify css & js
+gulp.task('copy-index', ['clean'], function (){
+    return gulp.src(pkg.paths.client_template_src)
+        .pipe(htmlreplace({
+            'css': pkg.paths.client_style_dest,
+            'js': pkg.paths.client_script_dest
+        }))
+        .pipe(gulp.dest(pkg.paths.client_dist));
+});
+
+gulp.task('test', ['tdd']);
+
+gulp.task('build', ['copy-bower-components', 'cache-templates', 'minify-js', 'minify-css', 'copy-index']);
