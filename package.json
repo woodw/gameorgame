@@ -7,19 +7,19 @@
     "preinstall": "ls -ao",
     "prestart": "npm test",
     "start": "node src/server/development.js",
-    "pretest": "npm install && bower install",
-    "test": "gulp test"
+    "lpretest": "npm install && bower install",
+    "test": "./node_modules/.bin/jasmine JASMINE_CONFIG_PATH=jasmine.json"
   },
   "author": "WIlliam Wood",
   "license": "ISC",
   "dependencies": {
     "bower": "^1.7.9",
+    "ejs": "^2.4.2",
     "express": "^4.14.0",
-    "ejs": "^2.4.2"
+    "request": "^2.74.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.13.2",
-    "chai": "^3.5.0",
     "eslint": "^3.3.1",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
@@ -34,7 +34,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
-    "jasmine-core": "^2.4.1",
+    "jasmine": "^2.4.1",
     "karma": "^1.2.0",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.1"
