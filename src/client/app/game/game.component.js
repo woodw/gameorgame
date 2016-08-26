@@ -1,6 +1,6 @@
 {
     /* @ngInject */
-    function GameController(){
+    function GameController(Game){
         var ctrl = this;
 
         ctrl.loadGame = loadGame;
@@ -9,12 +9,7 @@
 
         /////////
         function loadGame (gameid){
-            ctrl.gameid = gameid;
-            return {
-                title: 'title',
-                review: 'review',
-                categories: []
-            };
+            return Game.get({gameId: gameid});
         }
     }
 
