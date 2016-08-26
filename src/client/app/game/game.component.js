@@ -1,19 +1,9 @@
 {
     /* @ngInject */
-    function GameController($templateCache, $http, Game){
-        var ctrl = this;   
-        
-        ctrl.game = {};
-
-        ctrl.$onInit = function (){
-            ctrl.getGameObject();
-        };   
-
-        ctrl.getGameObject = function (){
-            ctrl.game = Game.get({gameId: ctrl.gameid});
-        };
-        
+    function GameController(){
     }
+
+    
 
     //Angular Blurb
     angular
