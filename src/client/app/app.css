@@ -39,7 +39,7 @@ game-face-off{
   content:'-';
 }
 
-game{
+game > div{
   flex:0 1 auto;
   
   margin:6% 3%;
@@ -54,6 +54,10 @@ game{
   justify-content:center;
   align-items:flex-start;
   flex-direction:column;
+}
+
+game > div.selected{
+  box-shadow:0px 0px 12px red; 
 }
 
 .game-icon{
@@ -72,7 +76,7 @@ game{
   display:flex;
   flex-direction:column;
 }
-.game-details h3{
+.game-details h1{
   flex:1 0 auto;
 }
 
@@ -109,9 +113,12 @@ game{
   
     transition: display 2s;
 }
-.game-review p{
+.game-review textarea{
     color:grey;
     font-size:1.5rem;
+    width:100%;
+    border:0px;
+    border-bottom:.1rem solid grey;
 }
 
 @media only screen and (max-width: 800px) {

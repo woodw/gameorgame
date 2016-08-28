@@ -3,13 +3,21 @@
     function GameController(Game){
         var ctrl = this;
 
+        ctrl.selected = false;
+        ctrl.information = {};
+
         ctrl.loadGame = loadGame;
-        /////////
-        ctrl.information = loadGame(ctrl.gameid);
+        ctrl.select = select;
 
         /////////
-        function loadGame (gameid){
+        ctrl.information = loadGame(ctrl.gameid);
+        /////////
+
+        function loadGame(gameid){
             return Game.get({gameId: gameid});
+        }
+        function select(){
+            ctrl.selected = true;
         }
     }
 

@@ -1,12 +1,14 @@
-<img class="game-icon" ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
-<div class="game-details">
-    <h3>{{$ctrl.game.title}}</h3>
-    <div class="game-rank">
-        <ul>
-            <li ng-repeat="category in $ctrl.game.categories" ng-click="$ctrl.select(category)" class="{{category.title}}">{{category.title}}</li>
-        </ul>
-    </div>
-    <div class="game-review">
-        <p>{{$ctrl.game.review}}</p>
+<div ng-class="$ctrl.selected" ng-click="$ctrl.select(this)">
+    <img class="game-icon" ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
+    <div class="game-details">
+        <h1>{{$ctrl.information.title}}</h1>
+        <div class="game-review">
+            <textarea placeholder="What I thought about the game..." ng-model="$ctrl.information.review"></textarea>
+        </div>
+        <div class="game-rank">
+            <ul>
+                <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.select(category)" class="{{category.title}}">{{category.title}}</li>
+            </ul>
+        </div>
     </div>
 </div>

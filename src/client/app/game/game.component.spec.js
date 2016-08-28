@@ -15,7 +15,7 @@ describe('game', function (){
             }
         };
 
-        describe('testing game init', function(){
+        describe('Initializing the game', function(){
 
             beforeEach(inject(function ($componentController){
 
@@ -29,7 +29,7 @@ describe('game', function (){
             }); 
         });
 
-        describe('testing game population', function(){
+        describe('Populating game data', function(){
             //Mocking AJAX service
             function GameService(){
                 return {
@@ -64,6 +64,21 @@ describe('game', function (){
                 expect(mockGameSvc.get).toHaveBeenCalled();
             });
 
+        });
+
+        describe('Selecting the game', function (){
+            beforeEach(function (){
+                spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
+            });
+
+            it('should mark game as selected', function (){
+
+                expect(underTest.selected).toBeFalsy();
+
+                underTest.select();
+
+                expect(underTest.selected).toBeTruthy();
+            });
         });
     });
 });
