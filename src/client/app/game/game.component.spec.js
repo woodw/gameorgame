@@ -80,5 +80,20 @@ describe('game', function (){
                 expect(underTest.selected).toBeTruthy();
             });
         });
+
+        describe('Choosing basic selection vs detail selection', function (){
+            beforeEach(function (){
+                spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
+            });
+
+            it('should switch between "basic" and "detail" selection types', function (){
+
+                expect(underTest.mode).toEqual('basic');
+
+                underTest.setMode('detail');
+
+                expect(underTest.mode).toEqual('detail');
+            });
+        });
     });
 });
