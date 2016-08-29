@@ -4,12 +4,12 @@
         var ctrl = this;
 
         ctrl.selected = false;
-        ctrl.mode = 'basic';
+        ctrl.useCategories = false;
         ctrl.information = {};
 
         ctrl.loadGame = loadGame;
         ctrl.select = select;
-        ctrl.setMode = setMode;
+        ctrl.toggleUseCategories = toggleUseCategories;
         /////////
         ctrl.information = loadGame(ctrl.gameid);
         /////////
@@ -20,23 +20,16 @@
         function select(element){
             element = element || ctrl;
             switch(true){
-                case (ctrl.mode=='detail' && element!== ctrl):
+                case (ctrl.useCategories && element!== ctrl):
                     element.selected = true;
                     break;
-                case (ctrl.mode=='basic' && element==ctrl):
+                case (!ctrl.useCategories && element==ctrl):
                     element.selected = true;
                     break;
             }
         }
-        function setMode(modeType){
-            switch(modeType){
-                case 'detail':
-                    ctrl.mode = 'detail';
-                    break;
-                default:
-                    ctrl.mode = 'basic';
-                    break;
-            }
+        function toggleUseCategories(){
+            ctrl.useCategories = !ctrl.useCategories;
         }
     }
 

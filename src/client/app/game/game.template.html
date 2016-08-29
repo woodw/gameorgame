@@ -1,15 +1,15 @@
-<div ng-class="{selected:$ctrl.selected}" ng-click="$ctrl.select($ctrl)">
+<div ng-click="$ctrl.select($ctrl)">
     <img class="game-icon" ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
-    <div class="game-details">
+    <div ng-class="{selected:$ctrl.selected}" class="game-details">
         <h1>{{$ctrl.information.title}}</h1>
         <div class="game-review">
             <textarea placeholder="What I thought about the game..." ng-model="$ctrl.information.review"></textarea>
         </div>
-        <div ng-class="{hidden:($ctrl.mode=='basic')}" class="game-rank">
+        <div ng-class="{hidden:(!$ctrl.useCategories)}" class="game-rank">
             <ul>
                 <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.select(category)" ng-class="{selected:category.selected}" class="{{category.title}}">{{category.title}}</li>
             </ul>
         </div>
-        <div ng-click="$ctrl.setMode('detail')">see more</div>
+        <div class="toggle-button" ng-click="$ctrl.toggleUseCategories()">{{($ctrl.useCategories)?'No contest? Click to simply choose an overall winner':'Too close to call? Click to choose by categories'}}</div>
     </div>
 </div>

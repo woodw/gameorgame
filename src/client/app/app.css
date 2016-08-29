@@ -56,10 +56,6 @@ game > div{
   flex-direction:column;
 }
 
-.selected{
-  color:blue;
-}
-
 .game-icon{
   background:rgba(15,30,20,.6);
   /*border:1px solid gray;*/
@@ -76,15 +72,17 @@ game > div{
   display:flex;
   flex-direction:column;
 }
+.game-details.selected{
+  background-color:rgba(80,50,50,.8);
+  color:white;
+}
 .game-details h1{
   flex:1 0 auto;
 }
 
-.game-details .more{
-  text-align:center;
-  color:gray;
+.game-rank{
+  transition:display 2s;
 }
-
 .game-rank ul{
   margin:0;
   padding:0;
@@ -92,19 +90,20 @@ game > div{
   display:flex;
   flex-direction:row;
   flex-wrap:wrap;
-  justify-content:center;
+  justify-content:space-around;
 }
 .game-rank li{
-    flex: 1 0 auto;
+    flex: 1 1 auto;
 
-    margin:0;
+    margin:.3rem;
     padding:0;
     min-width:30%;
     text-align:center;
     list-style-type:none;
     border:1px solid gray;
+    box-shadow:0 0 .3rem grey;
 }
-.game-rank li.winner{
+.game-rank li.selected{
   background-color:rgba(80,50,50,.8);
   color:white;
 }
@@ -119,6 +118,10 @@ game > div{
     width:100%;
     border:0px;
     border-bottom:.1rem solid grey;
+}
+
+.toggle-button{
+  padding:1rem .3rem;
 }
 
 @media only screen and (max-width: 800px) {

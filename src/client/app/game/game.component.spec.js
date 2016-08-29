@@ -90,7 +90,7 @@ describe('game', function (){
 
             it('should mark category as selected', function (){
 
-                underTest.setMode('detail');
+                underTest.toggleUseCategories();
                 underTest.select(underTest.information.categories[0]);
 
                 expect(underTest.information.categories[0].selected).toBeTruthy();
@@ -99,7 +99,7 @@ describe('game', function (){
             it('should not mark game as selected while mode is detail', function (){
 
 
-                underTest.setMode('detail');
+                underTest.toggleUseCategories();
                 underTest.select();
 
                 expect(underTest.selected).toBeFalsy();
@@ -107,21 +107,20 @@ describe('game', function (){
 
         });
 
-        describe('Choosing basic selection vs detail selection', function (){
+        describe('Choosing to use or not use categories', function (){
             beforeEach(inject(function ($componentController){
                 underTest = $componentController('game', null, {gameid: mock_data.gameid});
                 spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
                 underTest.information = underTest.loadGame(mock_data.gameid);
             }));
 
-            it('should switch between "basic" and "detail" selection types', function (){
+            it('should switch between using and not using categories for selection', function (){
 
-                expect(underTest.mode).toEqual('basic');
+                underTest.toggleUseCategories();
 
-                underTest.setMode('detail');
-
-                expect(underTest.mode).toEqual('detail');
+                expect(underTest.useCategories).toBeTruthy();
             });
+
         });
     });
 });
