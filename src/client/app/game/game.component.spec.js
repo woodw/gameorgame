@@ -33,7 +33,8 @@ describe('game', function (){
 
                 expect(underTest.gameid).toBeDefined();
                 expect(underTest.gameid).toEqual(mock_data.gameid);
-            }); 
+            });
+
         });
 
         describe('Populating game data', function(){

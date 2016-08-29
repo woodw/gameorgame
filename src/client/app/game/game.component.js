@@ -10,6 +10,7 @@
         ctrl.loadGame = loadGame;
         ctrl.toggleSelected = toggleSelected;
         ctrl.toggleUseCategories = toggleUseCategories;
+        ctrl.reviewExpand = reviewExpand;
         /////////
         ctrl.information = loadGame(ctrl.gameid);
         ctrl.information.categories = ctrl.information.categories || [];
@@ -54,6 +55,12 @@
             ctrl.useCategories = !ctrl.useCategories;
             ctrl.selected = false;
             ctrl.information.categories.forEach(function (item){item.selected = false;}); 
+        }
+        function reviewExpand($event){
+            $event.stopPropagation();
+            var element = typeof $event === 'object' ? $event.target : document.getElementById($event);
+            var scrollHeight = element.scrollHeight;
+            element.style.height =  scrollHeight + "px";  
         }
     }
 
