@@ -12,12 +12,15 @@
         ctrl.toggleUseCategories = toggleUseCategories;
         /////////
         ctrl.information = loadGame(ctrl.gameid);
+        ctrl.information.categories = ctrl.information.categories || [];
         /////////
 
         function loadGame(gameid){
             return Game.get({gameId: gameid});
         }
-        function toggleSelected(element){
+        function toggleSelected($event, element){
+            console.log($event,element);
+            $event.stopPropagation();
             element = element || ctrl;
             switch(true){
                 case (ctrl.useCategories && element!== ctrl):
@@ -28,8 +31,11 @@
                     break;
             }
         }
-        function toggleUseCategories(){
+        function toggleUseCategories($event){
+            $event.stopPropagation();
             ctrl.useCategories = !ctrl.useCategories;
+            ctrl.selected = false;
+            ctrl.information.categories.forEach(function (item){item.selected = false;}); 
         }
     }
 

@@ -120,6 +120,14 @@ describe('game', function (){
                 expect(underTest.useCategories).toBeTruthy();
             });
 
+            it('should reset selection when switching between using or not using categories', function (){
+
+                underTest.toggleSelected();
+                underTest.toggleUseCategories();
+
+                expect(underTest.selected).toBeFalsy();
+            });
+
         });
     });
 });
