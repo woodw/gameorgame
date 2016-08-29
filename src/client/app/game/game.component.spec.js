@@ -81,26 +81,25 @@ describe('game', function (){
                 underTest.information = underTest.loadGame(mock_data.gameid);
             }));
 
-            it('should mark game as selected', function (){
+            it('should toggle game as selected', function (){
                 
-                underTest.select();
+                underTest.toggleSelected();
                 
                 expect(underTest.selected).toBeTruthy();
             });
 
-            it('should mark category as selected', function (){
+            it('should toggle category as selected', function (){
 
                 underTest.toggleUseCategories();
-                underTest.select(underTest.information.categories[0]);
+                underTest.toggleSelected(underTest.information.categories[0]);
 
                 expect(underTest.information.categories[0].selected).toBeTruthy();
             });
 
             it('should not mark game as selected while mode is detail', function (){
 
-
                 underTest.toggleUseCategories();
-                underTest.select();
+                underTest.toggleSelected();
 
                 expect(underTest.selected).toBeFalsy();
             });

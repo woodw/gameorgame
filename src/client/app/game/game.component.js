@@ -8,7 +8,7 @@
         ctrl.information = {};
 
         ctrl.loadGame = loadGame;
-        ctrl.select = select;
+        ctrl.toggleSelected = toggleSelected;
         ctrl.toggleUseCategories = toggleUseCategories;
         /////////
         ctrl.information = loadGame(ctrl.gameid);
@@ -17,14 +17,14 @@
         function loadGame(gameid){
             return Game.get({gameId: gameid});
         }
-        function select(element){
+        function toggleSelected(element){
             element = element || ctrl;
             switch(true){
                 case (ctrl.useCategories && element!== ctrl):
-                    element.selected = true;
+                    element.selected = !element.selected;
                     break;
                 case (!ctrl.useCategories && element==ctrl):
-                    element.selected = true;
+                    element.selected = !element.selected;
                     break;
             }
         }

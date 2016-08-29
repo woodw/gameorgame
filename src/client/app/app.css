@@ -1,6 +1,9 @@
+*{
+   transition:color .1s, background-color 1s;
+}
 html{
   height:100%;
-  font-family:verdana;
+  font-family:verdana; 
 }
 body{
   height:100%;
@@ -81,7 +84,7 @@ game > div{
 }
 
 .game-rank{
-  transition:display 2s;
+
 }
 .game-rank ul{
   margin:0;
@@ -110,7 +113,6 @@ game > div{
 
 .game-review{
   
-    transition: display 2s;
 }
 .game-review textarea{
     color:grey;
