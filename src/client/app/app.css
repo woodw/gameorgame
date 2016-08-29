@@ -1,5 +1,6 @@
 *{
    transition:color .1s, background-color 1s;
+   border-radius:.1rem;
 }
 html{
   height:100%;
@@ -84,7 +85,7 @@ game > div{
 }
 
 .game-rank{
-
+  margin:1rem 0;
 }
 .game-rank ul{
   margin:0;
@@ -103,8 +104,7 @@ game > div{
     min-width:30%;
     text-align:center;
     list-style-type:none;
-    border:1px solid gray;
-    box-shadow:0 0 .3rem grey;
+    box-shadow:0 0 .4rem #111;
 }
 .game-rank li.selected{
   background-color:rgba(80,50,50,.8);
@@ -115,15 +115,22 @@ game > div{
   
 }
 .game-review textarea{
+    background-color:transparent;
     color:grey;
     font-size:1.5rem;
     width:100%;
     border:0px;
     border-bottom:.1rem solid grey;
 }
+.game-review textarea.selected{
+    color:white;
+}
 
 .toggle-button{
+  text-align:center;
+  box-shadow:0 0 .4rem #111;
   padding:1rem .3rem;
+  margin:1rem .3rem;
 }
 
 @media only screen and (max-width: 800px) {

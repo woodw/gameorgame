@@ -1,14 +1,14 @@
 <div ng-click="$ctrl.toggleSelected($event)">
     <img class="game-icon" ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
     <div ng-class="{selected:$ctrl.selected}" class="game-details">
-        <h1>{{$ctrl.information.title}}{{$ctrl.selected}}</h1>
-        <div class="game-review">
-            <textarea placeholder="What I thought about the game..." ng-model="$ctrl.information.review"></textarea>
-        </div>
+        <h1>{{$ctrl.information.title}}</h1>
         <div ng-class="{hidden:(!$ctrl.useCategories)}" class="game-rank">
             <ul>
                 <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.toggleSelected($event,category)" ng-class="{selected:category.selected}" class="{{category.title}}">{{category.title}}</li>
             </ul>
+        </div>
+        <div class="game-review">
+            <textarea placeholder="What I thought about the game..." ng-class="{selected:$ctrl.selected}" ng-model="$ctrl.information.review"></textarea>
         </div>
         <div class="toggle-button" ng-click="$ctrl.toggleUseCategories($event)">{{($ctrl.useCategories)?'No contest? Click to simply choose an overall winner':'Too close to call? Click to choose by categories'}}</div>
     </div>
