@@ -1,4 +1,4 @@
-<div ng-class="$ctrl.selected" ng-click="$ctrl.select(this)">
+<div ng-class="{selected:$ctrl.selected}" ng-click="$ctrl.select($ctrl)">
     <img class="game-icon" ng-src="http://cdn.akamai.steamstatic.com/steam/apps/{{$ctrl.gameid}}/header.jpg"/>
     <div class="game-details">
         <h1>{{$ctrl.information.title}}</h1>
@@ -7,7 +7,7 @@
         </div>
         <div class="game-rank">
             <ul>
-                <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.select(category)" class="{{category.title}}">{{category.title}}</li>
+                <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.select(category)" ng-class="{selected:category.selected}" class="{{category.title}}">{{category.title}}</li>
             </ul>
         </div>
     </div>

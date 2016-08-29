@@ -17,8 +17,10 @@
         function loadGame(gameid){
             return Game.get({gameId: gameid});
         }
-        function select(){
-            ctrl.selected = true;
+        function select(element){
+            console.log(element);
+            element = element || ctrl;
+            element.selected = true;
         }
         function setMode(modeType){
             switch(modeType){

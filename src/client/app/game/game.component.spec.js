@@ -11,7 +11,14 @@ describe('game', function (){
             gameinfo: {
                 title: 'title',
                 review: 'review',
-                categories: []
+                categories: [
+                    {title:'gameplay',selected:false},
+                    {title:'immersion',selected:false},
+                    {title:'performance',selected:false},
+                    {title:'sound',selected:false},
+                    {title:'story',selected:false},
+                    {title:'visuals',selected:false}
+                ]
             }
         };
 
@@ -34,7 +41,7 @@ describe('game', function (){
             function GameService(){
                 return {
                     get: function (){
-                        return {title: 'title',review: 'review',categories: []};
+                        return mock_data.gameinfo;
                     }
                 };
             }
@@ -73,12 +80,18 @@ describe('game', function (){
 
             it('should mark game as selected', function (){
 
-                expect(underTest.selected).toBeFalsy();
-
                 underTest.select();
 
                 expect(underTest.selected).toBeTruthy();
             });
+
+            it('should mark category as selected', function (){
+
+                underTest.select(underTest.information.categories[0]);
+
+                expect(underTest.information.categories[0].selected).toBeTruthy();
+            });
+
         });
 
         describe('Choosing basic selection vs detail selection', function (){
