@@ -18,9 +18,15 @@
             return Game.get({gameId: gameid});
         }
         function select(element){
-            console.log(element);
             element = element || ctrl;
-            element.selected = true;
+            switch(true){
+                case (ctrl.mode=='detail' && element!== ctrl):
+                    element.selected = true;
+                    break;
+                case (ctrl.mode=='basic' && element==ctrl):
+                    element.selected = true;
+                    break;
+            }
         }
         function setMode(modeType){
             switch(modeType){

@@ -56,7 +56,7 @@ describe('game', function (){
 
             it('Should load game information based on gameid', function (){
                 
-                underTest.loadGame(mock_data.gameid);
+                underTest.information = underTest.loadGame(mock_data.gameid);
 
                 expect(underTest.information.title).toBeDefined();
                 expect(underTest.information.review).toBeDefined();
@@ -74,30 +74,45 @@ describe('game', function (){
         });
 
         describe('Selecting the game', function (){
-            beforeEach(function (){
+            
+            beforeEach(inject(function ($componentController){
+                underTest = $componentController('game', null, {gameid: mock_data.gameid});
                 spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
-            });
+                underTest.information = underTest.loadGame(mock_data.gameid);
+            }));
 
             it('should mark game as selected', function (){
-
+                
                 underTest.select();
-
+                
                 expect(underTest.selected).toBeTruthy();
             });
 
             it('should mark category as selected', function (){
 
+                underTest.setMode('detail');
                 underTest.select(underTest.information.categories[0]);
 
                 expect(underTest.information.categories[0].selected).toBeTruthy();
             });
 
+            it('should not mark game as selected while mode is detail', function (){
+
+
+                underTest.setMode('detail');
+                underTest.select();
+
+                expect(underTest.selected).toBeFalsy();
+            });
+
         });
 
         describe('Choosing basic selection vs detail selection', function (){
-            beforeEach(function (){
+            beforeEach(inject(function ($componentController){
+                underTest = $componentController('game', null, {gameid: mock_data.gameid});
                 spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
-            });
+                underTest.information = underTest.loadGame(mock_data.gameid);
+            }));
 
             it('should switch between "basic" and "detail" selection types', function (){
 

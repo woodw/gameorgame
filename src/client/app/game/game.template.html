@@ -5,10 +5,11 @@
         <div class="game-review">
             <textarea placeholder="What I thought about the game..." ng-model="$ctrl.information.review"></textarea>
         </div>
-        <div class="game-rank">
+        <div ng-class="{hidden:($ctrl.mode=='basic')}" class="game-rank">
             <ul>
                 <li ng-repeat="category in $ctrl.information.categories" ng-click="$ctrl.select(category)" ng-class="{selected:category.selected}" class="{{category.title}}">{{category.title}}</li>
             </ul>
         </div>
+        <div ng-click="$ctrl.setMode('detail')">see more</div>
     </div>
 </div>
