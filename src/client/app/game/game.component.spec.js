@@ -81,27 +81,41 @@ describe('game', function (){
                 underTest.information = underTest.loadGame(mock_data.gameid);
             }));
 
-            it('should toggle game as selected', function (){
+            it('should be able to select the game', function (){
                 
-                underTest.toggleSelected();
+                underTest.toggleSelected(new Event);
                 
                 expect(underTest.selected).toBeTruthy();
             });
 
-            it('should toggle category as selected', function (){
+            it('should be able to select game by category', function (){
 
-                underTest.toggleUseCategories();
-                underTest.toggleSelected(underTest.information.categories[0]);
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event, underTest.information.categories[0]);
 
                 expect(underTest.information.categories[0].selected).toBeTruthy();
             });
 
             it('should not mark game as selected while mode is detail', function (){
 
-                underTest.toggleUseCategories();
-                underTest.toggleSelected();
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event);
 
                 expect(underTest.selected).toBeFalsy();
+            });
+
+            it('should select game if majority of categories are selected', function (){
+
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event, underTest.information.categories[0]);
+                underTest.toggleSelected(new Event, underTest.information.categories[1]);
+                underTest.toggleSelected(new Event, underTest.information.categories[2]);
+
+                expect(underTest.selected).toBeFalsy();
+
+                underTest.toggleSelected(new Event, underTest.information.categories[3]);
+
+                expect(underTest.selected).toBeTruthy();
             });
 
         });
@@ -115,15 +129,15 @@ describe('game', function (){
 
             it('should switch between using and not using categories for selection', function (){
 
-                underTest.toggleUseCategories();
+                underTest.toggleUseCategories(new Event);
 
                 expect(underTest.useCategories).toBeTruthy();
             });
 
             it('should reset selection when switching between using or not using categories', function (){
 
-                underTest.toggleSelected();
-                underTest.toggleUseCategories();
+                underTest.toggleSelected(new Event);
+                underTest.toggleUseCategories(new Event);
 
                 expect(underTest.selected).toBeFalsy();
             });
