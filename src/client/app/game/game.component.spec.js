@@ -4,67 +4,145 @@ describe('game', function (){
     beforeEach(module('game'));
 
     describe('GameController', function (){
-
-        var _gameid = '8675309';
-        var gameData = {
-            level:3,
-            id:'379720',
-            title:'Doom',
-            review:'This game is the best!',
-            categories:[
-                {title:'gameplay',level:2},
-                {title:'immersion',level:3},
-                {title:'performance',level:1},
-                {title:'sound',level:3},
-                {title:'story',level:3},
-                {title:'visuals',level:1}
-            ]
+        //mocking variables
+        var underTest, mockGameSvc;
+        var mock_data = {
+            gameid: '101101',
+            gameinfo: {
+                title: 'title',
+                review: 'review',
+                categories: [
+                    {title:'gameplay',selected:false},
+                    {title:'immersion',selected:false},
+                    {title:'performance',selected:false},
+                    {title:'sound',selected:false},
+                    {title:'story',selected:false},
+                    {title:'visuals',selected:false}
+                ]
+            }
         };
 
-        //var mockUtilSvc; 
-        var underTest, $httpBackend;
+        describe('Initializing the game', function(){
 
-        //model creation to make a new factory in lower scope to override Angular factory. Mocking
-        //angular.model(function($provide){
-        //    $provide.factory('Game', function (){
-        //        this.get = jasmine.createSpy('get').andCallFake(function (){
-        //            return 1;
-        //        });
-        //    });
-        //});
+            beforeEach(inject(function ($componentController){
 
-        //beforeEach(inject(function ($componentController, _$httpBackend_, Game){
-        beforeEach(inject(function ($componentController, _$httpBackend_){
-            $httpBackend = _$httpBackend_;
-            underTest = $componentController('game');
-            underTest.gameid = _gameid;
-            //mockUtilSvc = Game;
+                underTest = $componentController('game', null, {gameid: mock_data.gameid});
+            }));
 
-            $httpBackend.expectGET('api/games/'+_gameid).respond(gameData);
-            
-        }));
+            it('Should expose a gameid', function (){
 
-        describe('Game Initialize',function (){
-
-            it('Should call getGameObject oninit', function (){
-                spyOn(underTest, 'getGameObject');
-
-                underTest.$onInit();
-
-                expect(underTest.getGameObject).toHaveBeenCalled();
+                expect(underTest.gameid).toBeDefined();
+                expect(underTest.gameid).toEqual(mock_data.gameid);
             });
 
-            it('Should get game details', function() {
-                jasmine.addCustomEqualityTester(angular.equals);
-
-                expect(underTest.game).toEqual({});
-
-                underTest.getGameObject();
-                $httpBackend.flush();
-
-                expect(underTest.game).toEqual(gameData);
-            });
         });
-    
+
+        describe('Populating game data', function(){
+            //Mocking AJAX service
+            function GameService(){
+                return {
+                    get: function (){
+                        return mock_data.gameinfo;
+                    }
+                };
+            }
+            angular.module('mock.core.game', []).factory('Game', GameService);
+
+            beforeEach(module('mock.core.game'));
+
+            beforeEach(inject(function ($componentController, _Game_){
+                underTest = $componentController('game', {Game:_Game_}, {gameid: mock_data.gameid});
+                mockGameSvc = _Game_;
+            }));
+
+            it('Should load game information based on gameid', function (){
+                
+                underTest.information = underTest.loadGame(mock_data.gameid);
+
+                expect(underTest.information.title).toBeDefined();
+                expect(underTest.information.review).toBeDefined();
+                expect(underTest.information.categories).toBeDefined();
+            });
+
+            it('Should recieve game information from game service', function (){
+                spyOn(mockGameSvc, 'get');
+
+                underTest.loadGame(mock_data.gameid);
+
+                expect(mockGameSvc.get).toHaveBeenCalled();
+            });
+
+        });
+
+        describe('Selecting the game', function (){
+            
+            beforeEach(inject(function ($componentController){
+                underTest = $componentController('game', null, {gameid: mock_data.gameid});
+                spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
+                underTest.information = underTest.loadGame(mock_data.gameid);
+            }));
+
+            it('should be able to select the game', function (){
+                
+                underTest.toggleSelected(new Event);
+                
+                expect(underTest.selected).toBeTruthy();
+            });
+
+            it('should be able to select game by category', function (){
+
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event, underTest.information.categories[0]);
+
+                expect(underTest.information.categories[0].selected).toBeTruthy();
+            });
+
+            it('should not mark game as selected while mode is detail', function (){
+
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event);
+
+                expect(underTest.selected).toBeFalsy();
+            });
+
+            it('should select game if majority of categories are selected', function (){
+
+                underTest.toggleUseCategories(new Event);
+                underTest.toggleSelected(new Event, underTest.information.categories[0]);
+                underTest.toggleSelected(new Event, underTest.information.categories[1]);
+                underTest.toggleSelected(new Event, underTest.information.categories[2]);
+
+                expect(underTest.selected).toBeFalsy();
+
+                underTest.toggleSelected(new Event, underTest.information.categories[3]);
+
+                expect(underTest.selected).toBeTruthy();
+            });
+
+        });
+
+        describe('Choosing to use or not use categories', function (){
+            beforeEach(inject(function ($componentController){
+                underTest = $componentController('game', null, {gameid: mock_data.gameid});
+                spyOn(underTest, 'loadGame').and.returnValue(mock_data.gameinfo);
+                underTest.information = underTest.loadGame(mock_data.gameid);
+            }));
+
+            it('should switch between using and not using categories for selection', function (){
+
+                underTest.toggleUseCategories(new Event);
+
+                expect(underTest.useCategories).toBeTruthy();
+            });
+
+            it('should reset selection when switching between using or not using categories', function (){
+
+                underTest.toggleSelected(new Event);
+                underTest.toggleUseCategories(new Event);
+
+                expect(underTest.selected).toBeFalsy();
+            });
+
+        });
     });
 });
