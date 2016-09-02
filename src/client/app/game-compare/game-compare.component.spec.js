@@ -5,31 +5,47 @@ describe('gameCompare', function(){
 
     describe('GameCompareController', function(){
 
-        var _gamesData = [
-            {'id':'379720'},
-            {'id':'377160'},
-            {'id':'234140'}
-        ];
-        var underTest, $httpBackend;
+        var underTest, mockGameSvc;
+        var mock_data = {
+            games: [
+                {'id':'379720'},
+                {'id':'377160'}
+            ]
+        };
 
-        beforeEach(inject(function ($componentController, _$httpBackend_){
-            $httpBackend = _$httpBackend_;
-            underTest = $componentController('gameCompare');
-            underTest.games = _gamesData;
-            //mockUtilSvc = Game;
+        describe('Populate games data', function (){
+            //Mocking AJAX service
+            function GameService(){
+                return {
+                    query: function (){
+                        return mock_data.games;
+                    }
+                };
+            }
+            angular.module('mock.game.gameCompare', []).factory('Game', GameService);
 
-            $httpBackend.expectGET('api/games').respond(_gamesData);
-            
-        }));
+            beforeEach(module('mock.game.gameCompare'));
 
-        describe('Game Compare Initialize', function(){
-            it('Should retrieve games data ', function() {
-                jasmine.addCustomEqualityTester(angular.equals);
+            beforeEach(inject(function ($componentController, _Game_){
+                underTest = $componentController('gameCompare', {Game:_Game_}, {});
+                mockGameSvc = _Game_;
+            }));
 
-                $httpBackend.flush();
+            it('Should initially load two games', function (){
 
-                expect(underTest.games).toEqual(_gamesData);
+                underTest.games = underTest.loadGames();
+                
+                expect(underTest.games.length).toEqual(2);
             });
+
+            it('Should recieve games from game service', function (){
+                spyOn(mockGameSvc, 'query');
+
+                underTest.loadGames();
+
+                expect(mockGameSvc.query).toHaveBeenCalled();
+            });
+
         });
     });
 });
