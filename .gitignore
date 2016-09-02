@@ -39,3 +39,6 @@ jspm_packages
 
 # production directory
 dist
+
+#server mock data directory
+src/server/data_mock
