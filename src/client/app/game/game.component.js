@@ -60,7 +60,7 @@
             $event.stopPropagation();
             var element = typeof $event === 'object' ? $event.target : document.getElementById($event);
             var scrollHeight = element.scrollHeight;
-            element.style.height =  scrollHeight + "px";  
+            element.style.height =  scrollHeight + 'px';  
         }
     }
 
