@@ -3,8 +3,8 @@ const path = require('path');
 const app = express();
 const fs = require('fs');
 
-const appPersonGames = retrieveJSON('./data_mock/app_person_games.json');
-const appPersonGameDetails = retrieveJSON('./data_mock/app_person_game_details.json');
+const appPersonGames = retrieveJSON(__dirname + '/data_mock/app_person_games.json');
+const appPersonGameDetails = retrieveJSON(__dirname + '/data_mock/app_person_game_details.json');
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static(path.join(__dirname, '../client')));
