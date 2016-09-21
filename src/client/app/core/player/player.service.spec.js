@@ -2,7 +2,6 @@ describe('Player', function () {
     var mockSteamAPI;
     var underTest;
     var deferred;
-    var promise;
     var $rootScope;
 
     var mockData = {
@@ -14,7 +13,6 @@ describe('Player', function () {
 
     beforeEach(inject(function(_Player_, _SteamAPI_, _$q_, _$rootScope_) {
         deferred = _$q_.defer();
-        promise = deferred.promise;
         underTest = _Player_;
         mockSteamAPI = _SteamAPI_;
         $rootScope = _$rootScope_;
