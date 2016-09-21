@@ -26,7 +26,7 @@ describe('Game', function (){
         $httpBackend.verifyNoOutstandingRequest();
     });
 
-    it('Should retrieve game data', function (){
+    xit('Should retrieve game data', function (){
         var games = Game.query();
 
         expect(games).toEqual([]);

@@ -29,7 +29,7 @@ describe('SteamAPI', function (){
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        it('Should retrieve player summary data when requested', function (){
+        xit('Should retrieve player summary data when requested', function (){
             var player = underTest.getPlayer({playerId:mockData.playerId});
             
             expect(player).toEqual({});
@@ -54,7 +54,7 @@ describe('SteamAPI', function (){
             $httpBackend.verifyNoOutstandingRequest();
         });
 
-        it('Should retrieve list of games for player when requested', function (){
+        xit('Should retrieve list of games for player when requested', function (){
             var games = underTest.getGames({playerId:mockData.playerId});
             
             expect(games).toEqual({});
