@@ -6,7 +6,8 @@ describe('Player', function () {
 
     var mockData = {
         playerId:'01234',
-        playerSummary: {foo:'bar'}
+        playerSummary: {foo:'bar'},
+        playerGames: {foo: 'bar'}
     };
 
     beforeEach(module('core.player'));
@@ -18,10 +19,10 @@ describe('Player', function () {
         $rootScope = _$rootScope_;
 
         mockSteamAPI.getPlayer = jasmine.createSpy('getPlayer').and.returnValue(deferred);
+        mockSteamAPI.getGames = jasmine.createSpy('getGames').and.returnValue(deferred);
     }));
 
-    it('should simulate promise', function() {
-
+    it('should reach out to steamAPI to get player data', function() {
         underTest.loadPlayer(mockData.playerId);        
         deferred.resolve(mockData.playerSummary);
         $rootScope.$apply();
@@ -30,7 +31,13 @@ describe('Player', function () {
         expect(mockSteamAPI.getPlayer).toHaveBeenCalled();
     });
 
+    it('should reach out to steamAPI to get player data', function() {
+        underTest.loadGames(mockData.playerId);        
+        deferred.resolve(mockData.playerGames);
+        $rootScope.$apply();
 
-    
+        expect(underTest.getGames()).toEqual(mockData.playerGames);
+        expect(mockSteamAPI.getGames).toHaveBeenCalled();
+    });
 
 });
