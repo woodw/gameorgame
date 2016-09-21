@@ -1,7 +1,6 @@
 {
     /* @ngInject */
-    function SteamAPIService($resource){
-
+    function SteamAPIFactory($resource){
         return $resource('', {steamKey: '0190A77F9FB8607560F54173607694EC'}, {
             getPlayer: {
                 method: 'GET',
@@ -18,6 +17,6 @@
 
     angular
         .module('core.steamapi')
-        .factory('SteamAPI', SteamAPIService);
+        .factory('SteamAPI', SteamAPIFactory);
 
 }
