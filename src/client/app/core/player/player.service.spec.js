@@ -1,43 +1,42 @@
-describe('Player', function () {
-    var mockSteamAPI;
-    var underTest;
-    var deferred;
-    var $rootScope;
+{
+    describe('Player', function() {
+        var $httpBackend;
+        var underTest;
+        var mockData = {
+            playerId: '1234',
+            playerSummary:{foo: 'bar'}
+        };
 
-    var mockData = {
-        playerId:'01234',
-        playerSummary: {foo:'bar'},
-        playerGames: {foo: 'bar'}
-    };
+        // Add a custom equality tester before each test
+        beforeEach(function() {
+            jasmine.addCustomEqualityTester(angular.equals);
+        });
 
-    beforeEach(module('core.player'));
+        // Load the module that contains the `Phone` service before each test
+        beforeEach(module('core.player'));
 
-    beforeEach(inject(function(_Player_, _SteamAPI_, _$q_, _$rootScope_) {
-        deferred = _$q_.defer();
-        underTest = _Player_;
-        mockSteamAPI = _SteamAPI_;
-        $rootScope = _$rootScope_;
+        // Instantiate the service and "train" `$httpBackend` before each test
+        beforeEach(inject(function(_$httpBackend_, _Player_) {
+            $httpBackend = _$httpBackend_;
+            $httpBackend.expectGET('player/'+mockData.playerId).respond(mockData.playerSummary);
 
-        mockSteamAPI.getPlayer = jasmine.createSpy('getPlayer').and.returnValue(deferred);
-        mockSteamAPI.getGames = jasmine.createSpy('getGames').and.returnValue(deferred);
-    }));
+            underTest = _Player_;
+        }));
 
-    it('should reach out to steamAPI to get player data', function() {
-        underTest.loadPlayer(mockData.playerId);        
-        deferred.resolve(mockData.playerSummary);
-        $rootScope.$apply();
+        // Verify that there are no outstanding expectations or requests after each test
+        afterEach(function () {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
 
-        expect(underTest.getPlayer()).toEqual(mockData.playerSummary);
-        expect(mockSteamAPI.getPlayer).toHaveBeenCalled();
+        it('It should get player information from the server', function() {
+            
+            underTest.load(mockData.playerId);
+            expect(underTest.player).toEqual({});
+            $httpBackend.flush();
+            
+            expect(underTest.player).toEqual(mockData.playerSummary);
+        });
+
     });
-
-    it('should reach out to steamAPI to get player data', function() {
-        underTest.loadGames(mockData.playerId);        
-        deferred.resolve(mockData.playerGames);
-        $rootScope.$apply();
-
-        expect(underTest.getGames()).toEqual(mockData.playerGames);
-        expect(mockSteamAPI.getGames).toHaveBeenCalled();
-    });
-
-});
+}

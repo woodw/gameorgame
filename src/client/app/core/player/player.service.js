@@ -1,32 +1,23 @@
-'use strict';
+{
 
-function PlayerFactory(SteamAPI){
-	var player;
+	/* @ngInject */
+	function PlayerService($resource){
+		var server = $resource('player/:playerId');
 
-	function Player(){
+		function Player(){
+			this.player = {};
+		}
+		Player.prototype.load = function (playerId){
+			console.log(this.player);
+			this.player = server.get({playerId: playerId});
+			return this.player;
+		};
+
+		return new Player();
 	}
-	Player.prototype.loadPlayer = function (playerId){
-		return SteamAPI.getPlayer({playerId: playerId}).promise.then(function (response){
-				player = response;
-		});
-	};
-	Player.prototype.loadGames = function (playerId){
-		return SteamAPI.getGames({playerId: playerId}).promise.then(function (response){
-				player = player || {};
-				player.games = response;
-		});
-	};
-	Player.prototype.getPlayer = function (){
-		return player;
-	};
-	Player.prototype.getGames = function (){
-		return player.games;
-	};
 
+	angular
+		.module('core.player')
+  		.service('Player', PlayerService);
 
-	return new Player();
 }
-
-angular
-  .module('core.player')
-  .service('Player', PlayerFactory);

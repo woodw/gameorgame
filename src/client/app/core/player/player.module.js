@@ -1,4 +1,4 @@
 {
     angular
-        .module('core.player', ['core.steamapi']);
+        .module('core.player', ['ngResource']);
 }
