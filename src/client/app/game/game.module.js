@@ -1,5 +1,5 @@
 'use strict';
 {
     angular
-        .module('game', ['core.game']);
+        .module('game', ['core.games']);
 }

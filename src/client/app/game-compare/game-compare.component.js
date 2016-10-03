@@ -1,9 +1,20 @@
 {
 
     /* @ngInject */
-    function GameCompareController($templateCache,Game){
+    function GameCompareController(Game){
         var ctrl = this;
-        ctrl.games = Game.query();
+
+        
+
+        ctrl.loadGames = loadGames;
+        ctrl.$onInit = init;
+
+        function init(){
+            ctrl.games = ctrl.loadGames();
+        }
+        function loadGames(){
+            return Game.query();
+        }
     }
 
     //Angular Blurb

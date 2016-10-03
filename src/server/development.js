@@ -1,7 +1,12 @@
-var express = require('express');
-var path = require('path');
-var app = express();
-//var router = express.Router();
+const express = require('express');
+const path = require('path');
+const app = express();
+const fs = require('fs');
+
+var appPerson = JSON.parse(fs.readFileSync(__dirname + '/data_mock/app_person.json', 'utf8'));
+var appPersonGames = JSON.parse(fs.readFileSync(__dirname + '/data_mock/app_person_games.json', 'utf8'));
+var steamPerson = JSON.parse(fs.readFileSync(__dirname + '/data_mock/steam_person.json', 'utf8'));
+var steamPersonGames = JSON.parse(fs.readFileSync(__dirname + '/data_mock/steam_person_games.json', 'utf8'));
 
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static(path.join(__dirname, '../client')));
@@ -13,66 +18,16 @@ app.get('/', function(request, response) {
     response.render('index.html');
 });
 
+app.get('/api/person/:steamId', function (request, response){
+    response.json(appPersonGames);
+});
+
 app.get('/api/games/', function(request, response){
-    response.json([
-        {'id':'379720'},
-        {'id':'377160'},
-        {'id':'234140'}
-    ]);
+    response.json(appPersonGames);
 });
 
 app.get('/api/games/:gameId', function(request, response){
-    switch(request.params.gameId){
-    case '379720':
-        response.json({
-            level:3,
-            id:'379720',
-            title:'Doom',
-            review:'This game is the best!',
-            categories:[
-                {title:'gameplay',level:2},
-                {title:'immersion',level:3},
-                {title:'performance',level:1},
-                {title:'sound',level:3},
-                {title:'story',level:3},
-                {title:'visuals',level:1}
-            ]
-        });
-        break;
-    case '377160':
-        response.json({
-            level:3,
-            id:'377160',
-            title:'Fallout 4',
-            review:'Fallout 4 review',
-            categories:[
-                {title:'gameplay',level:2},
-                {title:'immersion',level:3},
-                {title:'performance',level:1},
-                {title:'sound',level:3},
-                {title:'story',level:3},
-                {title:'visuals',level:1}
-            ]
-        });
-        break;
-    case '234140':
-        response.json({
-            level:3,
-            id:'234140',
-            title:'Mad Max',
-            review:'Mad Max Review',
-            categories:[
-                {title:'gameplay',level:2},
-                {title:'immersion',level:3},
-                {title:'performance',level:1},
-                {title:'sound',level:3},
-                {title:'story',level:3},
-                {title:'visuals',level:1}
-            ]
-        });
-        break;
-    }
-
+    response.json(appPersonGameDetails[request.params.gameId]);
 });
 
 app.get('*', function(request, response) {
