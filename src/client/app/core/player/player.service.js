@@ -5,12 +5,12 @@
 		var server = $resource('player/:playerId');
 
 		function Player(){
-			this.player = {};
+			this.information = {};
 		}
 		Player.prototype.load = function (playerId){
-			console.log(this.player);
-			this.player = server.get({playerId: playerId});
-			return this.player;
+			
+			this.information = server.get({playerId: playerId});
+			return this.informaiton;
 		};
 
 		return new Player();

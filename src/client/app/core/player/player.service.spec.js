@@ -32,10 +32,10 @@
         it('It should get player information from the server', function() {
             
             underTest.load(mockData.playerId);
-            expect(underTest.player).toEqual({});
+            expect(underTest.information).toEqual({});
             $httpBackend.flush();
             
-            expect(underTest.player).toEqual(mockData.playerSummary);
+            expect(underTest.information).toEqual(mockData.playerSummary);
         });
 
     });

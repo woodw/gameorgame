@@ -1,4 +1,4 @@
 {
     angular
-        .module('core', ['core.game']);
+        .module('core', ['core.player','core.games']);
 }

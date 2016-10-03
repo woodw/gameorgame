@@ -4,10 +4,14 @@
     function GameCompareController(Game){
         var ctrl = this;
 
+        
+
         ctrl.loadGames = loadGames;
-        //////////////////////////
-        ctrl.games = loadGames();
-        //////////////////////////
+        ctrl.$onInit = init;
+
+        function init(){
+            ctrl.games = ctrl.loadGames();
+        }
         function loadGames(){
             return Game.query();
         }
